@@ -62,14 +62,17 @@ public sealed class AppConfig
         AllowTrailingCommas = true,
     };
 
+    /// <summary>Reads appsettings.json / appsettings.Local.json next to the exe.</summary>
+    public static AppConfig Load() => Load(AppContext.BaseDirectory);
+
     /// <summary>
-    /// Reads appsettings.json then appsettings.Local.json (both next to the exe).
-    /// Each top-level section present in a file replaces that whole section — a
-    /// Local file only needs to specify what it's overriding.
+    /// Same as <see cref="Load()"/> but from an arbitrary directory — the seam
+    /// FieldJobs.Tests uses to test merge behavior without touching the real
+    /// build output. Each top-level section present in a file replaces that
+    /// whole section — a Local file only needs to specify what it's overriding.
     /// </summary>
-    public static AppConfig Load()
+    public static AppConfig Load(string baseDir)
     {
-        var baseDir = AppContext.BaseDirectory;
         var cfg = new AppConfig();
         ApplyFile(cfg, Path.Combine(baseDir, "appsettings.json"));
         ApplyFile(cfg, Path.Combine(baseDir, "appsettings.Local.json"));

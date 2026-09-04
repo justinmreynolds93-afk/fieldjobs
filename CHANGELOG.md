@@ -4,6 +4,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — M4
+- `tests/FieldJobs.Tests`: 16 xunit tests over `AppConfig`/`Vocab`/`SeedData`
+  against a throwaway in-memory SQLite connection; includes a parameterised
+  regression test for the M2 seed-status bug across multiple party configs
+- `Db.Schema` is now `internal` (+ `InternalsVisibleTo`) so tests can build a
+  schema without touching the real `%LOCALAPPDATA%` database
+- `.github/workflows/ci.yml`: build+test on `windows-latest`, then a second job
+  runs `build.ps1` and uploads the Inno Setup installer as a workflow artifact
+- Verified locally: 16/16 tests pass; `build.ps1` produces a working
+  self-contained installer, silent-installed and smoke-tested
+
 ### Added — M2
 - `Config/AppConfig.cs`: loads `appsettings.json` (shipped) + `appsettings.Local.json`
   (gitignored override, section-wholesale-replace merge)

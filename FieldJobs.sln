@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{99702F88-1C5B-4243-BF69-FD516CC5ED27}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldJobs", "src\FieldJobs\FieldJobs.csproj", "{EEE0D380-C97A-404D-83C3-E181F990F42A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0333F44B-9346-414D-884D-3A97C6E5ED7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldJobs.Tests", "tests\FieldJobs.Tests\FieldJobs.Tests.csproj", "{96497C8A-A95F-4EE7-BFEC-70B0BF2103D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,8 +24,13 @@ Global
 		{EEE0D380-C97A-404D-83C3-E181F990F42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEE0D380-C97A-404D-83C3-E181F990F42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEE0D380-C97A-404D-83C3-E181F990F42A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96497C8A-A95F-4EE7-BFEC-70B0BF2103D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96497C8A-A95F-4EE7-BFEC-70B0BF2103D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96497C8A-A95F-4EE7-BFEC-70B0BF2103D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96497C8A-A95F-4EE7-BFEC-70B0BF2103D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EEE0D380-C97A-404D-83C3-E181F990F42A} = {99702F88-1C5B-4243-BF69-FD516CC5ED27}
+		{96497C8A-A95F-4EE7-BFEC-70B0BF2103D9} = {0333F44B-9346-414D-884D-3A97C6E5ED7A}
 	EndGlobalSection
 EndGlobal

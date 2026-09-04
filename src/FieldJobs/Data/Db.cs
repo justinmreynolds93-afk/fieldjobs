@@ -103,7 +103,8 @@ public static class Db
         }
     }
 
-    private const string Schema = """
+    /// <summary>internal (not private) so FieldJobs.Tests can build a schema against a throwaway connection.</summary>
+    internal const string Schema = """
         CREATE TABLE IF NOT EXISTS schema_meta (version INTEGER NOT NULL);
 
         CREATE TABLE IF NOT EXISTS settings (

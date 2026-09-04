@@ -81,8 +81,29 @@ ignores — so the private config never leaves your machine.
 - **M1** — copy the solution, rename namespaces/app, `dotnet build` green *(done)*
 - **M2** — config layer; every former hard-coded label reads from `appsettings.json` *(done)*
 - **M3** — genericise `SeedData.cs` (fake demo data) + the two stage templates *(done as part of M1 — see below)*
-- **M4** — CI (`dotnet build` + `dotnet test`) + Inno Setup installer with generic IDs
+- **M4** — CI (`dotnet build` + `dotnet test`) + Inno Setup installer with generic IDs *(done)*
 - **M5** — README with screenshots (demo data), a short "why gated stages" design note
+
+### M4 notes (2026-09-05)
+
+Added `tests/FieldJobs.Tests` (xunit): 16 tests over `AppConfig`, `Vocab`, and
+`SeedData`, run against a throwaway in-memory SQLite connection (`Db.Schema` is
+now `internal` + `InternalsVisibleTo` so tests can build a schema without going
+through the real `%LOCALAPPDATA%` singleton). The `SeedData` tests include a
+parameterised regression test — `EnsureDefaults_SeededJobStatuses_AlwaysMatch...`
+— across three different party configs, specifically guarding against the exact
+bug class M2 shipped with (a seed value hard-coded ahead of what the dynamic
+`Vocab` actually produces).
+
+`.github/workflows/ci.yml`: `windows-latest` (WPF doesn't build on Linux/macOS
+runners) — `dotnet build` + `dotnet test`, then a second job runs `build.ps1`
+(publish + Inno Setup compile) and uploads the installer as a workflow artifact.
+
+Verified locally before pushing: `dotnet test` → 16/16 passed. `build.ps1` →
+produced `dist/FieldJobs-Setup-0.1.0.exe` (50.3 MB, self-contained). Ran it
+`/VERYSILENT`, confirmed `FieldJobs.exe` + `appsettings.json` land in
+`%LOCALAPPDATA%\Programs\FieldJobs`, launched the *installed* exe (not the build
+output) and confirmed it starts and gets a Start Menu shortcut.
 
 ### M2 notes (2026-09-05)
 

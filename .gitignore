@@ -6,6 +6,7 @@ obj/
 artifacts/
 *.db
 *.db-*
+TestResults/
 
 # local, private config — your real labels / rates never leave this machine
 appsettings.Local.json

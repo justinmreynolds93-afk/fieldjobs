@@ -4,13 +4,13 @@ A desktop tracker for multi-stage field-service work — inspections, scoping,
 walkthroughs — with gated stage checklists, per-stage invoicing, payment
 tracking, document capture, and PDF reports. WPF / .NET 8, SQLite, no server.
 
-> **Status: M2 — configurable.** A generalised, open-source extraction of a
+> **Status: M4 — CI + installer.** A generalised, open-source extraction of a
 > private line-of-business app; see [PLAN.md](PLAN.md) for exactly what was
-> renamed/genericised and the M4+ roadmap (CI, the installer, screenshots).
+> renamed/genericised. M5 (README screenshots) is all that's left.
 
+![ci](https://github.com/justinmreynolds93-afk/fieldjobs/actions/workflows/ci.yml/badge.svg)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)
-![status](https://img.shields.io/badge/status-M2%20configurable-yellow)
 
 ## The idea
 
@@ -55,6 +55,29 @@ dotnet run --project src/FieldJobs
 
 Requires the .NET 8 SDK (Windows — it's WPF). First run seeds two obviously-fake
 demo jobs into `%LOCALAPPDATA%\FieldJobs\fieldjobs.db`.
+
+## Test
+
+```
+dotnet test FieldJobs.sln
+```
+
+16 xunit tests over the config layer and the seeding logic, run against a
+throwaway in-memory SQLite connection — no real app data involved. CI runs
+these on every push.
+
+## Installer
+
+```powershell
+.\build.ps1                 # dotnet publish (self-contained win-x64) + Inno Setup
+.\build.ps1 -NoInstaller     # skip the Inno Setup step
+```
+
+Needs the .NET 8 SDK and [Inno Setup 6](https://jrsoftware.org/isinfo.php)
+(`winget install JRSoftware.InnoSetup`). Produces
+`dist/FieldJobs-Setup-<version>.exe` — a ~50 MB self-contained installer, no
+.NET runtime required on the target machine. CI builds this on every push too
+(see the Actions tab for the artifact).
 
 ## License
 
