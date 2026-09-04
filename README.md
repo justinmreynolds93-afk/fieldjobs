@@ -8,9 +8,9 @@ tracking, document capture, and PDF reports. WPF / .NET 8, SQLite, no server.
 > private line-of-business app. See [PLAN.md](PLAN.md) for exactly what's being
 > extracted and genericised. Code lands once the plan is signed off.
 
-![build](https://github.com/justinmreynolds93-afk/fieldjobs/actions/workflows/build.yml/badge.svg)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)
+![status](https://img.shields.io/badge/status-scaffolding-yellow)
 
 ## The idea
 
