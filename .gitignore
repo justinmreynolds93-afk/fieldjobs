@@ -11,7 +11,8 @@ artifacts/
 appsettings.Local.json
 src/**/appsettings.Local.json
 
-# installer output
+# build/installer output
+dist/
 installer/Output/
 
 .DS_Store

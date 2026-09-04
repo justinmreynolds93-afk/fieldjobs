@@ -1,0 +1,43 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Light palette -->
+    <Color x:Key="C.Window">#FFF4F5F7</Color>
+    <Color x:Key="C.Surface">#FFFFFFFF</Color>
+    <Color x:Key="C.SurfaceAlt">#FFEEF1F4</Color>
+    <Color x:Key="C.Hover">#FFE7ECF1</Color>
+    <Color x:Key="C.Selected">#FFDCE8F2</Color>
+    <Color x:Key="C.Border">#FFD4D9DF</Color>
+    <Color x:Key="C.PrimaryText">#FF1B2733</Color>
+    <Color x:Key="C.SecondaryText">#FF44515F</Color>
+    <Color x:Key="C.MutedText">#FF6E7681</Color>
+    <Color x:Key="C.Accent">#FF0F6292</Color>
+    <Color x:Key="C.AccentText">#FFFFFFFF</Color>
+    <Color x:Key="C.Nav">#FF14202B</Color>
+    <Color x:Key="C.NavText">#FFC9D3DC</Color>
+    <Color x:Key="C.NavSelected">#FF0F6292</Color>
+    <Color x:Key="C.Ok">#FF1E7D46</Color>
+    <Color x:Key="C.Warn">#FFB8860B</Color>
+    <Color x:Key="C.Bad">#FFB00020</Color>
+    <Color x:Key="C.Info">#FF0F6292</Color>
+
+    <SolidColorBrush x:Key="WindowBg" Color="{StaticResource C.Window}" />
+    <SolidColorBrush x:Key="SurfaceBg" Color="{StaticResource C.Surface}" />
+    <SolidColorBrush x:Key="SurfaceAltBg" Color="{StaticResource C.SurfaceAlt}" />
+    <SolidColorBrush x:Key="HoverBg" Color="{StaticResource C.Hover}" />
+    <SolidColorBrush x:Key="SelectedBg" Color="{StaticResource C.Selected}" />
+    <SolidColorBrush x:Key="LineBrush" Color="{StaticResource C.Border}" />
+    <SolidColorBrush x:Key="PrimaryText" Color="{StaticResource C.PrimaryText}" />
+    <SolidColorBrush x:Key="SecondaryText" Color="{StaticResource C.SecondaryText}" />
+    <SolidColorBrush x:Key="MutedText" Color="{StaticResource C.MutedText}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource C.Accent}" />
+    <SolidColorBrush x:Key="AccentText" Color="{StaticResource C.AccentText}" />
+    <SolidColorBrush x:Key="NavBg" Color="{StaticResource C.Nav}" />
+    <SolidColorBrush x:Key="NavText" Color="{StaticResource C.NavText}" />
+    <SolidColorBrush x:Key="NavSelectedBg" Color="{StaticResource C.NavSelected}" />
+    <SolidColorBrush x:Key="OkBrush" Color="{StaticResource C.Ok}" />
+    <SolidColorBrush x:Key="WarnBrush" Color="{StaticResource C.Warn}" />
+    <SolidColorBrush x:Key="BadBrush" Color="{StaticResource C.Bad}" />
+    <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource C.Info}" />
+
+</ResourceDictionary>

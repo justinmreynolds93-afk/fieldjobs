@@ -77,16 +77,41 @@ ignores — so the private config never leaves your machine.
 
 ## Milestones
 
-- **M0** — repo scaffold, this plan, README, LICENSE *(done — you're reading it)*
-- **M1** — copy the solution, rename namespaces/app, `dotnet build` green
+- **M0** — repo scaffold, this plan, README, LICENSE *(done)*
+- **M1** — copy the solution, rename namespaces/app, `dotnet build` green *(done)*
 - **M2** — config layer; every former hard-coded label reads from `appsettings.json`
-- **M3** — genericise `SeedData.cs` (fake demo data) + the two stage templates
+- **M3** — genericise `SeedData.cs` (fake demo data) + the two stage templates *(done as part of M1 — see below)*
 - **M4** — CI (`dotnet build` + `dotnet test`) + Inno Setup installer with generic IDs
 - **M5** — README with screenshots (demo data), a short "why gated stages" design note
 
+### M1 notes (2026-09-04)
+
+Copied `src/MetecJobTracker` → `src/FieldJobs`, renamed the namespace/csproj/sln/
+installer/assembly, and genericised in the same pass since M3's scope turned out
+to be inseparable from a correct rename (`MetecNumber`/`IhdaNumber`/
+`HomeownerName` are both C# identifiers *and* the strings shown to a user):
+
+- `MetecNumber`/`IhdaNumber`/`HomeownerName` → `ExternalRef1`/`ExternalRef2`/`ClientName`
+  (and the matching `metec_number`/`ihda_number`/`homeowner_name` DB columns)
+- `Vocab.ProjectTypes`: `Full Rehabilitation/Accessibility/Roof-Only/Other` →
+  `Standard/Priority/Other`; `Vocab.JobStatuses` + `WaitingOn()`:
+  `Waiting on METEC/homeowner` → `Waiting on agency/client`
+- Every "METEC"/"IHDA"/"HRAP" string (labels, PDF headers, contact seed, bill-to)
+  → "Agency" / "Ref #" / "Program #" as appropriate
+- `SeedData.cs` demo data fully replaced: fake client names, `123 Example St` /
+  `456 Sample Ave` addresses, generic reference numbers, a $100 placeholder
+  invoice amount instead of the real fee schedule; **fee_schedule defaults to $0**
+  (your real rates go in Settings, they're not shipped in the repo)
+- New installer GUID (`FDB821F1-...`), version reset to `0.1.0`
+- Verified: `dotnet build FieldJobs.sln` → 0 warnings / 0 errors; ran the built
+  exe, confirmed it seeds ~2 MB of demo data with no crash
+
+Not yet ported: `docs/ARCHITECTURE.md` and friends, and the sample CSV export —
+deferred so M1 stayed scoped to "code builds and runs clean."
+
 ## What I need from you
 
-1. **Confirm keep-WPF** (vs. "port to Avalonia" — slower, broader reach).
-2. **Confirm the repo starts with fresh git history** (no connection to the private one).
-3. Anything in the METEC app that is *more* sensitive than addresses/names/rates
-   that I should know about before I read the code.
+1. ~~Confirm keep-WPF~~ — confirmed, keeping WPF.
+2. ~~Confirm fresh git history~~ — confirmed (this repo was `git init`'d standalone).
+3. ~~Anything more sensitive than addresses/names/rates~~ — answered: just fake
+   names, no other special sensitivity. Noted and scrubbed.

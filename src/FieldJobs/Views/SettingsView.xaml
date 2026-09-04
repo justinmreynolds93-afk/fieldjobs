@@ -1,0 +1,145 @@
+<UserControl x:Class="FieldJobs.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
+        <StackPanel MaxWidth="820" HorizontalAlignment="Left">
+            <TextBlock Text="Settings" Style="{StaticResource H1}" />
+
+            <!-- Business identity -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="My business (used on PDFs and invoices)" Style="{StaticResource H2}" />
+                    <TextBlock Text="Name" Style="{StaticResource FieldLabel}" />
+                    <TextBox x:Name="BizName" />
+                    <TextBlock Text="DBA / trade name" Style="{StaticResource FieldLabel}" />
+                    <TextBox x:Name="BizDba" />
+                    <TextBlock Text="Address" Style="{StaticResource FieldLabel}" />
+                    <TextBox x:Name="BizAddress" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="44" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Email" Style="{StaticResource FieldLabel}" />
+                            <TextBox x:Name="BizEmail" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Phone" Style="{StaticResource FieldLabel}" />
+                            <TextBox x:Name="BizPhone" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Appearance -->
+            <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel>
+                    <TextBlock Text="Appearance" Style="{StaticResource H2}" />
+                    <TextBlock Text="Theme" Style="{StaticResource FieldLabel}" />
+                    <ComboBox x:Name="ThemeBox" Width="220" HorizontalAlignment="Left"
+                              SelectionChanged="Theme_Changed" />
+                </StackPanel>
+            </Border>
+
+            <!-- Invoice defaults -->
+            <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel>
+                    <TextBlock Text="Invoice defaults" Style="{StaticResource H2}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Invoice number prefix" Style="{StaticResource FieldLabel}" />
+                            <TextBox x:Name="InvPrefix" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Payment terms" Style="{StaticResource FieldLabel}" />
+                            <TextBox x:Name="InvTerms" />
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Text="Bill to (top of every invoice)" Style="{StaticResource FieldLabel}" />
+                    <TextBox x:Name="BillTo" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="52" />
+                </StackPanel>
+            </Border>
+
+            <!-- Fee schedule -->
+            <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel>
+                    <TextBlock Text="Fee schedule" Style="{StaticResource H2}" />
+                    <TextBlock Text="These amounts pre-fill new invoices. Edit freely; press Tab after the last row to add one."
+                               Style="{StaticResource Muted}" Margin="0,0,0,8" />
+                    <DataGrid x:Name="FeeGrid" IsReadOnly="False" CanUserAddRows="True" AutoGenerateColumns="False"
+                              MinHeight="140">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Label" Binding="{Binding Label, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                            <DataGridTextColumn Header="Amount" Binding="{Binding Amount, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Width="140" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+
+            <!-- Agency contacts -->
+            <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel>
+                    <TextBlock Text="Agency contacts" Style="{StaticResource H2}" />
+                    <TextBlock Text="Used for the &quot;Prepared for&quot; line on reports and as the default &quot;Sent to&quot; on invoices. The first row is the default."
+                               Style="{StaticResource Muted}" Margin="0,0,0,8" TextWrapping="Wrap" />
+                    <DataGrid x:Name="ContactGrid" IsReadOnly="False" CanUserAddRows="True" AutoGenerateColumns="False"
+                              MinHeight="120">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="1.4*" />
+                            <DataGridTextColumn Header="Role" Binding="{Binding Role, UpdateSourceTrigger=PropertyChanged}" Width="1.6*" />
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Width="1.4*" />
+                            <DataGridTextColumn Header="Phone" Binding="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+
+            <!-- Checklist templates -->
+            <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel>
+                    <TextBlock Text="Default stage checklists" Style="{StaticResource H2}" />
+                    <TextBlock Text="One item per line. New jobs copy these lists; existing jobs are not changed."
+                               Style="{StaticResource Muted}" Margin="0,0,0,8" />
+                    <ComboBox x:Name="TemplateStageBox" Width="280" HorizontalAlignment="Left"
+                              SelectionChanged="TemplateStage_Changed" />
+                    <TextBox x:Name="TemplateText" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="150"
+                             Margin="0,8,0,0" VerticalScrollBarVisibility="Auto" FontFamily="Consolas" />
+                    <Button Content="Save this checklist" HorizontalAlignment="Left" Margin="0,8,0,0"
+                            Click="SaveTemplate_Click" />
+                </StackPanel>
+            </Border>
+
+            <!-- Backup & data -->
+            <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                <StackPanel>
+                    <TextBlock Text="Backup &amp; data" Style="{StaticResource H2}" />
+                    <TextBlock Text="Backup folder" Style="{StaticResource FieldLabel}" />
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Content="Browse…" Margin="8,0,0,0" Click="BrowseBackup_Click" />
+                        <TextBox x:Name="BackupFolder" />
+                    </DockPanel>
+                    <WrapPanel Margin="0,12,0,0">
+                        <Button Content="Back up now" Style="{StaticResource Primary}" Click="BackupNow_Click" Margin="0,0,8,8" />
+                        <Button Content="Restore from backup…" Click="Restore_Click" Margin="0,0,8,8" />
+                        <Button Content="Export jobs to CSV" Click="ExportCsv_Click" Margin="0,0,8,8" />
+                        <Button Content="Export jobs to Excel" Click="ExportXlsx_Click" Margin="0,0,8,8" />
+                        <Button Content="Open data folder" Click="OpenData_Click" Margin="0,0,8,8" />
+                    </WrapPanel>
+                    <TextBlock x:Name="DataPath" Style="{StaticResource Muted}" Margin="0,4,0,0" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" Margin="0,16,0,24">
+                <Button Content="Save settings" Style="{StaticResource Primary}" MinWidth="140" Click="Save_Click" />
+                <TextBlock x:Name="SavedNote" Style="{StaticResource Muted}" VerticalAlignment="Center" Margin="12,0,0,0" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
