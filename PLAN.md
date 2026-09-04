@@ -82,7 +82,23 @@ ignores — so the private config never leaves your machine.
 - **M2** — config layer; every former hard-coded label reads from `appsettings.json` *(done)*
 - **M3** — genericise `SeedData.cs` (fake demo data) + the two stage templates *(done as part of M1 — see below)*
 - **M4** — CI (`dotnet build` + `dotnet test`) + Inno Setup installer with generic IDs *(done)*
-- **M5** — README with screenshots (demo data), a short "why gated stages" design note
+- **M5** — README with screenshots (demo data), a short "why gated stages" design note *(done)*
+
+### M5 notes (2026-09-05)
+
+Screenshots (`docs/img/`): dashboard, jobs list, and the stage-checklist view —
+all captured against the fake demo data, all showing the config layer actually
+doing something (`Ref #`, "Waiting on Agency", `123 Example St`, generic
+checklist text). The "why gated stages" note is folded into the README's
+feature list rather than a separate doc: the checklist view *is* the pitch —
+a stage marked complete with no file attached gets flagged on the dashboard.
+
+All five milestones are done. What's left is genuinely optional polish:
+per-template/per-config-aware demo data (noted in the M2 section above), an
+Avalonia port (noted in the plan from the start as a deliberate non-goal for
+now), and `docs/ARCHITECTURE.md` / `docs/SCREENS.md` / `docs/STAGE-TEMPLATES.md`
+from the original app were never ported (M1 scoped that out to keep the first
+build-green pass small; still true today, still optional).
 
 ### M4 notes (2026-09-05)
 

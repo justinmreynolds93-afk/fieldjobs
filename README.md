@@ -4,13 +4,18 @@ A desktop tracker for multi-stage field-service work — inspections, scoping,
 walkthroughs — with gated stage checklists, per-stage invoicing, payment
 tracking, document capture, and PDF reports. WPF / .NET 8, SQLite, no server.
 
-> **Status: M4 — CI + installer.** A generalised, open-source extraction of a
-> private line-of-business app; see [PLAN.md](PLAN.md) for exactly what was
-> renamed/genericised. M5 (README screenshots) is all that's left.
+> A generalised, open-source extraction of a private line-of-business app; see
+> [PLAN.md](PLAN.md) for exactly what was renamed/genericised.
 
 ![ci](https://github.com/justinmreynolds93-afk/fieldjobs/actions/workflows/ci.yml/badge.svg)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)
+
+![Dashboard](docs/img/dashboard.png)
+
+*The dashboard — what's waiting on you vs. the agency vs. the client,
+receivables, and a "needs attention" feed (overdue invoices, stale jobs,
+completed stages with no file attached). All demo data.*
 
 ## The idea
 
@@ -28,6 +33,15 @@ it — and you invoice at a few points along the way. `fieldjobs` models that as
 - A **dashboard** that splits jobs by who you're waiting on and nags about stale
   jobs, overdue invoices, and missing backups
 - **PDF export** — a job summary and an invoice
+
+| Jobs list | Gated stage checklist |
+|---|---|
+| ![Jobs list](docs/img/jobs-list.png) | ![Stage checklist](docs/img/job-detail-stages.png) |
+
+The stage checklist is the actual mechanism: each stage copies its checklist
+from an editable template, and a stage marked complete with no file attached
+gets flagged back on the dashboard — the app nags you before the paperwork
+goes missing, not after.
 
 Everything program-specific — labels, parties, project types, the day-count
 rules, even which stage template to use — is configuration, not code. Copy

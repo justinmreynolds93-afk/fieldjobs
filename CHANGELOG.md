@@ -4,6 +4,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — M5
+- `docs/img/`: dashboard, jobs list, and stage-checklist screenshots (demo
+  data), wired into the README
+- Confirmed in CI (not just locally): both the `build-test` and `installer`
+  jobs pass on `windows-latest` — GitHub's Windows runners ship Inno Setup
+  preinstalled, so `build.ps1` works there unmodified
+
+**All five milestones done.**
+
 ### Added — M4
 - `tests/FieldJobs.Tests`: 16 xunit tests over `AppConfig`/`Vocab`/`SeedData`
   against a throwaway in-memory SQLite connection; includes a parameterised
