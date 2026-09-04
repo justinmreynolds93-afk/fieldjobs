@@ -49,7 +49,7 @@ public partial class InvoiceEditWindow : Window
         NumberBox.Text = _invoices.NextInvoiceNumber();
         DateBox.SelectedDate = DateTime.Today;
         StatusBox.SelectedItem = "Draft";
-        SentToBox.Text = new ContactService().Primary() is { } c ? $"{c.Name} (Agency)" : "";
+        SentToBox.Text = new ContactService().Primary() is { } c ? $"{c.Name} ({Vocab.AgencyPartyLabel})" : "";
         if (stageLabel != null) StageBox.Text = stageLabel;
 
         _lines.Add(new LineVm { Description = stageLabel ?? "", Qty = 1, Rate = suggestedAmount });
@@ -98,7 +98,7 @@ public partial class InvoiceEditWindow : Window
         var job = _jobs.Get(_jobId);
         JobText.Text = $"Job: {job.DisplayAddress}"
             + (string.IsNullOrWhiteSpace(job.ClientName) ? "" : $"  ·  {job.ClientName}")
-            + (string.IsNullOrWhiteSpace(job.ExternalRef1) ? "" : $"  ·  Agency {job.ExternalRef1}");
+            + (string.IsNullOrWhiteSpace(job.ExternalRef1) ? "" : $"  ·  {Vocab.Ref1Label} {job.ExternalRef1}");
 
         StageBox.ItemsSource = new StageService().ForJob(_jobId).Select(s => s.Name).ToList();
         PayDate.SelectedDate = DateTime.Today;

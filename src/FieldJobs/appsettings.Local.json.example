@@ -1,0 +1,16 @@
+// Copy this file to appsettings.Local.json (same folder — next to the .csproj
+// in dev, next to the exe once published) and edit. appsettings.Local.json is
+// gitignored: your real labels and rates never leave this machine.
+//
+// Any section you include here replaces that whole section from appsettings.json;
+// omit a section to keep the shipped default. This example happens to show the
+// values fieldjobs was originally extracted from (a real HRAP inspection
+// contract) — proof the extraction actually works, not a hint you need to use it.
+{
+  "brand": { "appName": "My Company Job Tracker", "org": "My Company LLC" },
+  "job": { "ref1Label": "METEC #", "ref2Label": "IHDA #", "clientLabel": "Homeowner" },
+  "parties": { "agency": "METEC", "client": "Homeowner" },
+  "projectTypes": ["Full Rehabilitation", "Accessibility", "Roof-Only", "Other"],
+  "rules": { "overdueDays": 30, "staleJobDays": 21, "backupNagDays": 10 },
+  "stageTemplate": "inspection-8"
+}

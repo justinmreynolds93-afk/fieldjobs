@@ -50,7 +50,7 @@ public partial class JobDetailView : UserControl
             _job.ClientName,
             _job.ProjectType,
             _job.JobNumber is null ? null : $"Job {_job.JobNumber}",
-            _job.ExternalRef1 is null ? null : $"Agency {_job.ExternalRef1}",
+            _job.ExternalRef1 is null ? null : $"{Vocab.Ref1Label} {_job.ExternalRef1}",
         }.Where(x => !string.IsNullOrWhiteSpace(x)));
 
         StatusText.Text = _job.Status;
@@ -114,11 +114,11 @@ public partial class JobDetailView : UserControl
             OverviewGrid.Children.Add(dp);
         }
         Add("Address", _job.DisplayAddress);
-        Add("Client", _job.ClientName);
+        Add(Vocab.ClientFieldLabel, _job.ClientName);
         Add("Project type", _job.ProjectType);
         Add("Job number", _job.JobNumber);
-        Add("Ref number", _job.ExternalRef1);
-        Add("Program number", _job.ExternalRef2);
+        Add(Vocab.Ref1Label, _job.ExternalRef1);
+        Add(Vocab.Ref2Label, _job.ExternalRef2);
         Add("Date assigned", _job.DateAssigned);
         Add("Status", _job.Status);
     }

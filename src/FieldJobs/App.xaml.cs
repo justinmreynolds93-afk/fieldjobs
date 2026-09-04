@@ -26,6 +26,7 @@ public partial class App : Application
         };
 
         AppPaths.EnsureCreated();
+        Models.Vocab.Configure(Config.AppConfig.Load());
         Db.Initialize();
 
         ApplyTheme(Settings.Theme);

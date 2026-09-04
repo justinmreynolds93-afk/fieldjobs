@@ -32,11 +32,11 @@
                         <TextBox x:Name="JobNumber" />
                     </StackPanel>
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Ref number" Style="{StaticResource FieldLabel}" />
+                        <TextBlock x:Name="Ref1LabelText" Style="{StaticResource FieldLabel}" />
                         <TextBox x:Name="ExternalRef1" />
                     </StackPanel>
                     <StackPanel Grid.Column="4">
-                        <TextBlock Text="Program number" Style="{StaticResource FieldLabel}" />
+                        <TextBlock x:Name="Ref2LabelText" Style="{StaticResource FieldLabel}" />
                         <TextBox x:Name="ExternalRef2" />
                     </StackPanel>
                 </Grid>
@@ -60,7 +60,7 @@
                     </StackPanel>
                 </Grid>
 
-                <TextBlock Text="Client name" Style="{StaticResource FieldLabel}" />
+                <TextBlock x:Name="ClientLabelText" Style="{StaticResource FieldLabel}" />
                 <TextBox x:Name="Client" />
 
                 <Grid>

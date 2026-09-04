@@ -1,18 +1,22 @@
 using Dapper;
+using FieldJobs.Config;
+using FieldJobs.Models;
 using Microsoft.Data.Sqlite;
 
 namespace FieldJobs.Data;
 
 /// <summary>
-/// First-run defaults: fee schedule, the eight gated stages, the checklist templates,
-/// and two fake demo jobs so the app is not empty on install.
+/// First-run defaults: fee schedule, the gated stages for the configured stage
+/// template ("inspection-8" or "basic-3" — see appsettings.json), the checklist
+/// templates, and two fake demo jobs so the app is not empty on install.
 /// Nothing here overwrites data the user has already changed.
 /// </summary>
 public static class SeedData
 {
     public record StageDef(int Seq, string Key, string Name, bool Optional);
 
-    public static readonly StageDef[] Stages =
+    /// <summary>The default 8-stage inspection/scope/walkthrough workflow.</summary>
+    public static readonly StageDef[] Inspection8Stages =
     {
         new(1, "assignment",        "Assignment / intake",                  false),
         new(2, "preview",           "Preview / initial inspection",         false),
@@ -24,7 +28,19 @@ public static class SeedData
         new(8, "closeout",          "Job closeout",                         false),
     };
 
-    public static readonly Dictionary<string, string[]> Checklists = new()
+    /// <summary>A minimal 3-stage workflow for simpler work that doesn't need scoping/punch.</summary>
+    public static readonly StageDef[] Basic3Stages =
+    {
+        new(1, "assignment", "Assignment / intake", false),
+        new(2, "work",       "Work in progress",    false),
+        new(3, "closeout",   "Job closeout",         false),
+    };
+
+    /// <summary>Stages for whichever template <c>appsettings.json</c>'s <c>stageTemplate</c> selects.</summary>
+    public static StageDef[] Stages =>
+        AppConfig.Instance.StageTemplate == "basic-3" ? Basic3Stages : Inspection8Stages;
+
+    private static readonly Dictionary<string, string[]> Inspection8Checklists = new()
     {
         ["assignment"] = new[]
         {
@@ -86,6 +102,33 @@ public static class SeedData
             "Job marked complete",
         },
     };
+
+    private static readonly Dictionary<string, string[]> Basic3Checklists = new()
+    {
+        ["assignment"] = new[]
+        {
+            "Job details recorded",
+            "Client confirmed",
+            "Target dates noted",
+        },
+        ["work"] = new[]
+        {
+            "Site visit completed",
+            "Photos taken",
+            "Progress notes saved",
+        },
+        ["closeout"] = new[]
+        {
+            "Invoice submitted",
+            "Payment received",
+            "Files archived for this job",
+            "Job marked complete",
+        },
+    };
+
+    /// <summary>Checklists for whichever template <c>appsettings.json</c>'s <c>stageTemplate</c> selects.</summary>
+    public static Dictionary<string, string[]> Checklists =>
+        AppConfig.Instance.StageTemplate == "basic-3" ? Basic3Checklists : Inspection8Checklists;
 
     // Zeroed by default (a fresh install has no idea what you charge) — set your
     // real rates in Settings. See docs/STAGE-TEMPLATES.md for example figures.
@@ -160,6 +203,11 @@ public static class SeedData
             c.Execute("INSERT OR IGNORE INTO settings(key,value) VALUES (@k,@v)", new { k, v });
     }
 
+    // Written against the inspection-8 stage keys. Under stageTemplate "basic-3"
+    // the jobs still get created (with basic-3's stages), but the SetStage calls
+    // below that reference "preview"/"scope_writing"/etc. simply match nothing —
+    // both demo jobs land at "Not started" instead of mid-workflow. Harmless, just
+    // a less impressive demo; a per-template sample dataset is a nice follow-up.
     private static void SeedSampleJobs(SqliteConnection c)
     {
         var now = DateTime.Now.ToString("s");
@@ -197,15 +245,22 @@ public static class SeedData
         c.Execute("INSERT INTO invoice_lines(invoice_id, description, qty, rate, seq) VALUES (@i,'Preview / initial inspection',1,100,0)", new { i = inv1 });
 
         // ---- Job 2: priority job, further along, one paid invoice + one draft ----
+        // status is parameterised (not a string literal) so it always matches
+        // whatever Vocab.JobStatuses currently contains — see the M2 bug note below.
         var j2 = c.ExecuteScalar<long>("""
             INSERT INTO jobs(job_number, external_ref1, external_ref2, address_street, address_city, address_zip,
                              client_name, project_type, date_assigned, role_notes, status, notes, created_at, updated_at)
             VALUES ('2026-009', 'REF-1002', 'PRG-1002', '456 Sample Ave', 'Somewhere', '00000',
                     'Sample Client B', 'Priority', @assigned,
-                    'Inspection and final walkthrough only. Agency wrote the scope.', 'Waiting on agency',
+                    'Inspection and final walkthrough only. Agency wrote the scope.', @status,
                     'Ramp and bathroom modifications. Client uses a mobility aid; requested a roll-in shower.', @now, @now);
             SELECT last_insert_rowid();
-            """, new { assigned = DateTime.Today.AddDays(-52).ToString("yyyy-MM-dd"), now });
+            """, new
+        {
+            assigned = DateTime.Today.AddDays(-52).ToString("yyyy-MM-dd"),
+            status = $"Waiting on {Vocab.AgencyPartyLabel}",
+            now
+        });
 
         CreateStagesFor(c, j2);
         SetStage(c, j2, "assignment", "Complete", -52, allChecked: true);

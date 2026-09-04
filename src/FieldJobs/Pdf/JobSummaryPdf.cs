@@ -48,11 +48,11 @@ public sealed class JobSummaryPdf
         PdfKit.InfoGrid(s, new (string, string)[]
         {
             ("Address", job.DisplayAddress),
-            ("Client", job.ClientName ?? ""),
+            (Vocab.ClientFieldLabel, job.ClientName ?? ""),
             ("Project type", job.ProjectType),
             ("Job number", job.JobNumber ?? ""),
-            ("Ref number", job.ExternalRef1 ?? ""),
-            ("Program number", job.ExternalRef2 ?? ""),
+            (Vocab.Ref1Label, job.ExternalRef1 ?? ""),
+            (Vocab.Ref2Label, job.ExternalRef2 ?? ""),
             ("Date assigned", PdfKit.Date(job.DateAssigned)),
             ("Status", job.Status),
             ("My role", job.RoleNotes ?? ""),

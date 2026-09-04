@@ -19,6 +19,10 @@ public partial class JobEditWindow : Window
     {
         InitializeComponent();
 
+        Ref1LabelText.Text = Vocab.Ref1Label;
+        Ref2LabelText.Text = Vocab.Ref2Label;
+        ClientLabelText.Text = $"{Vocab.ClientFieldLabel} name";
+
         ProjectType.ItemsSource = Vocab.ProjectTypes;
         Status.ItemsSource = Vocab.JobStatuses;
 
@@ -28,7 +32,7 @@ public partial class JobEditWindow : Window
         if (_isNew)
         {
             HeaderText.Text = "New job";
-            ProjectType.SelectedItem = "Standard";
+            ProjectType.SelectedItem = Vocab.ProjectTypes.FirstOrDefault();
             Status.SelectedItem = "Not started";
             DateAssigned.SelectedDate = DateTime.Today;
         }
@@ -56,7 +60,7 @@ public partial class JobEditWindow : Window
     {
         if (string.IsNullOrWhiteSpace(Street.Text) && string.IsNullOrWhiteSpace(Client.Text))
         {
-            MessageBox.Show("Enter at least a street address or a client name.",
+            MessageBox.Show($"Enter at least a street address or a {Vocab.ClientFieldLabel.ToLowerInvariant()} name.",
                 "Job", MessageBoxButton.OK, MessageBoxImage.Information);
             return;
         }
@@ -68,7 +72,7 @@ public partial class JobEditWindow : Window
         _job.AddressCity = Trim(City.Text);
         _job.AddressZip = Trim(Zip.Text);
         _job.ClientName = Trim(Client.Text);
-        _job.ProjectType = ProjectType.SelectedItem as string ?? "Standard";
+        _job.ProjectType = ProjectType.SelectedItem as string ?? Vocab.ProjectTypes.FirstOrDefault() ?? "Standard";
         _job.Status = Status.SelectedItem as string ?? "Not started";
         _job.RoleNotes = Trim(RoleNotes.Text);
         _job.Notes = Trim(Notes.Text);

@@ -15,7 +15,7 @@ public sealed class ExportService
     {
         yield return new[]
         {
-            "Job #", "Ref #", "Program #", "Address", "City", "ZIP", "Client", "Project type",
+            "Job #", Vocab.Ref1Label, Vocab.Ref2Label, "Address", "City", "ZIP", Vocab.ClientFieldLabel, "Project type",
             "Date assigned", "Status", "Current stage", "% complete", "Billed", "Paid", "Outstanding", "Notes"
         };
 
@@ -61,7 +61,7 @@ public sealed class ExportService
         using var wb = new XLWorkbook();
         var rows = new List<string[]>
         {
-            new[] { "Status", "Job", "Client", "Ref #", "Invoice #", "Invoice date", "Date sent",
+            new[] { "Status", "Job", Vocab.ClientFieldLabel, Vocab.Ref1Label, "Invoice #", "Invoice date", "Date sent",
                     "Stage", "Age (days)", "Age bucket", "Billed", "Paid", "Balance" }
         };
         foreach (var g in report.Groups)
@@ -97,7 +97,7 @@ public sealed class ExportService
         using var wb = new XLWorkbook();
         var rows = new List<string[]>
         {
-            new[] { "Status", "Address", "Client", "Job #", "Ref #", "Project type",
+            new[] { "Status", "Address", Vocab.ClientFieldLabel, "Job #", Vocab.Ref1Label, "Project type",
                     "Current stage", "% complete", "Billed", "Paid", "Outstanding" }
         };
         foreach (var (status, list) in report.Groups)

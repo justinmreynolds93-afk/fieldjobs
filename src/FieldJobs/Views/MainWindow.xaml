@@ -44,8 +44,8 @@
         <Border Grid.Column="0" Background="{DynamicResource NavBg}">
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top" Margin="16,20,16,16">
-                    <TextBlock Text="Agency" Foreground="White" FontSize="19" FontWeight="Bold" />
-                    <TextBlock Text="Job Tracker" Foreground="{DynamicResource NavText}" FontSize="13" />
+                    <TextBlock x:Name="BrandOrgText" Foreground="White" FontSize="19" FontWeight="Bold" />
+                    <TextBlock x:Name="BrandAppText" Foreground="{DynamicResource NavText}" FontSize="13" />
                 </StackPanel>
 
                 <StackPanel DockPanel.Dock="Bottom" Margin="12,12">

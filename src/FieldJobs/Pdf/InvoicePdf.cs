@@ -83,10 +83,10 @@ public sealed class InvoicePdf
         refP.AddText(job.DisplayAddress);
         var idBits = new[]
         {
-            job.ClientName is null ? null : $"Client {job.ClientName}",
+            job.ClientName is null ? null : $"{Vocab.ClientFieldLabel} {job.ClientName}",
             job.JobNumber is null ? null : $"Job {job.JobNumber}",
-            job.ExternalRef1 is null ? null : $"Agency {job.ExternalRef1}",
-            job.ExternalRef2 is null ? null : $"Agency {job.ExternalRef2}",
+            job.ExternalRef1 is null ? null : $"{Vocab.Ref1Label} {job.ExternalRef1}",
+            job.ExternalRef2 is null ? null : $"{Vocab.Ref2Label} {job.ExternalRef2}",
             inv.StageLabel is null ? null : $"Stage: {inv.StageLabel}",
         }.Where(x => x != null);
         refP.AddLineBreak();

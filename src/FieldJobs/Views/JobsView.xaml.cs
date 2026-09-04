@@ -12,6 +12,8 @@ public partial class JobsView : UserControl
     public JobsView()
     {
         InitializeComponent();
+        ClientColumn.Header = Vocab.ClientFieldLabel;
+        Ref1Column.Header = Vocab.Ref1Label;
         Loaded += (_, _) => Reload();
     }
 

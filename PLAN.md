@@ -79,10 +79,62 @@ ignores — so the private config never leaves your machine.
 
 - **M0** — repo scaffold, this plan, README, LICENSE *(done)*
 - **M1** — copy the solution, rename namespaces/app, `dotnet build` green *(done)*
-- **M2** — config layer; every former hard-coded label reads from `appsettings.json`
+- **M2** — config layer; every former hard-coded label reads from `appsettings.json` *(done)*
 - **M3** — genericise `SeedData.cs` (fake demo data) + the two stage templates *(done as part of M1 — see below)*
 - **M4** — CI (`dotnet build` + `dotnet test`) + Inno Setup installer with generic IDs
 - **M5** — README with screenshots (demo data), a short "why gated stages" design note
+
+### M2 notes (2026-09-05)
+
+`Config/AppConfig.cs` loads `appsettings.json` (shipped, generic — committed) then
+layers `appsettings.Local.json` (gitignored) on top; each top-level JSON section
+present in a file replaces that section wholesale, so a Local file only needs to
+specify what it's overriding. `App.xaml.cs` calls `Vocab.Configure(AppConfig.Load())`
+before `Db.Initialize()`, so `Vocab` — already the single source of truth for
+status/type dropdowns since M1 — now derives `ProjectTypes`, `JobStatuses`,
+`Ref1Label`/`Ref2Label`/`ClientFieldLabel`, `AgencyPartyLabel`/`ClientPartyLabel`,
+`BrandAppName`/`BrandOrg`, and the three `Rules` day-counts from config instead
+of being hard-coded. Wired into every label that showed one of these (PDF
+headers, XLSX/CSV export headers, the job form, the jobs grid, the dashboard,
+settings) — mostly pure C# string swaps since `Vocab` was already the
+abstraction boundary from M1; the few XAML labels needed an `x:Name` + a
+code-behind line.
+
+Also added a second stage template (`"basic-3"`: assignment → work → closeout)
+selected by `stageTemplate` in config — `SeedData.Stages`/`Checklists` are now
+properties that switch on `AppConfig.Instance.StageTemplate` instead of fixed
+fields.
+
+**Bug found and fixed during verification:** M1's demo-data rewrite had hardcoded
+job 2's seed status as the SQL literal `'Waiting on agency'` (lowercase). Once
+`Vocab.JobStatuses` became config-driven it generates `"Waiting on Agency"`
+(Title Case) by default — the literal no longer matched anything in the
+dropdown, so the demo job's status wouldn't have round-tripped through the
+Status combo box correctly. Fixed by parameterising it as
+`$"Waiting on {Vocab.AgencyPartyLabel}"` so it always matches whatever's
+configured. Caught by actually re-running the seeded app and checking the DB,
+not by reading the diff — the lesson from M1's own "test against live data"
+principle held up a second time.
+
+**Verified, not just built:**
+- `dotnet build` → 0 warnings / 0 errors
+- Ran the exe with the shipped `appsettings.json`: 8 inspection stages seed, job
+  statuses match `Vocab.JobStatuses` exactly
+- Ran it again with `appsettings.Local.json` set to `{"stageTemplate":"basic-3"}`:
+  exactly 3 stages seed (`assignment`/`work`/`closeout`) — proves the branch is real
+- Ran it a third time with the full `appsettings.Local.json.example` (the
+  original METEC/IHDA labels, as an override) copied to `appsettings.Local.json`:
+  seeded job status came back as `"Waiting on METEC"` — proves the party-label
+  override propagates end-to-end, not just into the dropdown list
+
+**Known limitation, not fixed:** the two seed *demo jobs* still use fixed
+`project_type` values (`"Standard"`, `"Priority"`) and are written against the
+inspection-8 stage keys. Under a customised `projectTypes` list or
+`stageTemplate: "basic-3"` the demo jobs still create fine, they just don't look
+as polished (a project type outside your configured list; stages that stay
+"Not started" instead of mid-workflow, since the `SetStage(...,"preview",...)`
+calls target inspection-8-only keys). Per-template/per-config demo data is a
+reasonable follow-up, not required for the config layer itself to be correct.
 
 ### M1 notes (2026-09-04)
 

@@ -23,7 +23,7 @@
                        Text="Search:" Margin="0,0,8,0" />
             <TextBox x:Name="SearchBox" Width="380" HorizontalAlignment="Left"
                      TextChanged="SearchBox_TextChanged"
-                     ToolTip="Search address, client, job number, Ref number, or status" />
+                     ToolTip="Search address, client, job number, reference number, or status" />
             <TextBlock x:Name="CountText" DockPanel.Dock="Right" HorizontalAlignment="Right"
                        VerticalAlignment="Center" Style="{StaticResource Muted}" />
         </DockPanel>
@@ -32,9 +32,9 @@
             <DataGrid x:Name="Grid" MouseDoubleClick="Grid_Open">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="2*" />
-                    <DataGridTextColumn Header="Client" Binding="{Binding ClientName}" Width="*" />
+                    <DataGridTextColumn x:Name="ClientColumn" Header="Client" Binding="{Binding ClientName}" Width="*" />
                     <DataGridTextColumn Header="Job #" Binding="{Binding JobNumber}" Width="90" />
-                    <DataGridTextColumn Header="Ref #" Binding="{Binding ExternalRef1}" Width="90" />
+                    <DataGridTextColumn x:Name="Ref1Column" Header="Ref #" Binding="{Binding ExternalRef1}" Width="90" />
                     <DataGridTextColumn Header="Type" Binding="{Binding ProjectType}" Width="120" />
                     <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="130" />
                     <DataGridTextColumn Header="Current stage" Binding="{Binding CurrentStage}" Width="160" />

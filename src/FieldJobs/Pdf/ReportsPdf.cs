@@ -102,7 +102,7 @@ public sealed class ReportsPdf
 
             var t = MoneyTable(s, 1.9, 1.3, 0.85, 0.85, 1.6, 0.55, 0.8, 0.8, 0.85);
             var hr = PdfKit.HeaderRow(t);
-            string[] heads = { "Job", "Client", "Invoice #", "Date", "Stage / section", "Age", "Billed", "Paid", "Balance" };
+            string[] heads = { "Job", Vocab.ClientFieldLabel, "Invoice #", "Date", "Stage / section", "Age", "Billed", "Paid", "Balance" };
             for (var i = 0; i < heads.Length; i++) hr.Cells[i].AddParagraph(heads[i]);
             RightAlign(hr, 5, 6, 7, 8);
 
@@ -198,7 +198,7 @@ public sealed class ReportsPdf
 
             var t = MoneyTable(s, 2.0, 1.3, 0.75, 1.0, 1.5, 0.45, 0.8, 0.8, 0.9);
             var hr = PdfKit.HeaderRow(t);
-            string[] heads = { "Address", "Client", "Job #", "Ref #", "Current stage", "%", "Billed", "Paid", "Outstanding" };
+            string[] heads = { "Address", Vocab.ClientFieldLabel, "Job #", Vocab.Ref1Label, "Current stage", "%", "Billed", "Paid", "Outstanding" };
             for (var i = 0; i < heads.Length; i++) hr.Cells[i].AddParagraph(heads[i]);
             RightAlign(hr, 5, 6, 7, 8);
 

@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using FieldJobs.Data;
+using FieldJobs.Models;
 
 namespace FieldJobs.Views;
 
@@ -12,6 +13,21 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         Instance = this;
+        Title = Vocab.BrandAppName;
+
+        // Org name (if set) is the big line with the app name underneath; otherwise
+        // the app name alone carries the branding.
+        if (!string.IsNullOrWhiteSpace(Vocab.BrandOrg))
+        {
+            BrandOrgText.Text = Vocab.BrandOrg;
+            BrandAppText.Text = Vocab.BrandAppName;
+        }
+        else
+        {
+            BrandOrgText.Text = Vocab.BrandAppName;
+            BrandAppText.Text = "Job Tracker";
+        }
+
         DataPathText.Text = "Data folder:\n" + AppPaths.DataRoot;
         ShowDashboard();
     }

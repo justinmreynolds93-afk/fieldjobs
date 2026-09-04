@@ -12,7 +12,7 @@
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Content="+ New job" Style="{StaticResource Primary}" Click="NewJob_Click" Margin="0,0,8,0" />
                     <Button Content="Record payment" Click="RecordPayment_Click" Margin="0,0,8,0" />
-                    <Button Content="Report for Agency" Click="Report_Click" />
+                    <Button x:Name="ReportButton" Content="Report for Agency" Click="Report_Click" />
                 </StackPanel>
             </Grid>
 
@@ -70,13 +70,13 @@
                 </Border>
                 <Border Style="{StaticResource Card}" Margin="4,0">
                     <StackPanel>
-                        <TextBlock Text="Waiting on agency" Style="{StaticResource Muted}" />
+                        <TextBlock x:Name="WaitAgencyLabel" Style="{StaticResource Muted}" />
                         <TextBlock x:Name="StatWaitAgency" Style="{StaticResource StatValue}" />
                     </StackPanel>
                 </Border>
                 <Border Style="{StaticResource Card}" Margin="8,0,0,0">
                     <StackPanel>
-                        <TextBlock Text="Waiting on client" Style="{StaticResource Muted}" />
+                        <TextBlock x:Name="WaitClientLabel" Style="{StaticResource Muted}" />
                         <TextBlock x:Name="StatWaitHo" Style="{StaticResource StatValue}" />
                     </StackPanel>
                 </Border>

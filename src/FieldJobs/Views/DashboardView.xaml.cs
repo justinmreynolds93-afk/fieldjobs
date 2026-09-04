@@ -15,6 +15,9 @@ public partial class DashboardView : UserControl
     public DashboardView()
     {
         InitializeComponent();
+        ReportButton.Content = $"Report for {Vocab.AgencyPartyLabel}";
+        WaitAgencyLabel.Text = $"Waiting on {Vocab.AgencyPartyLabel.ToLowerInvariant()}";
+        WaitClientLabel.Text = $"Waiting on {Vocab.ClientPartyLabel.ToLowerInvariant()}";
         Loaded += (_, _) => Refresh();
     }
 

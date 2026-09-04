@@ -40,6 +40,7 @@ public partial class SettingsView : UserControl
     public SettingsView()
     {
         InitializeComponent();
+        ContactsHeaderText.Text = $"{Vocab.AgencyPartyLabel} contacts";
         Loaded += (_, _) => Load();
     }
 

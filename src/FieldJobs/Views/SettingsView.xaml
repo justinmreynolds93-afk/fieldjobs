@@ -86,7 +86,7 @@
             <!-- Agency contacts -->
             <Border Style="{StaticResource Card}" Margin="0,12,0,0">
                 <StackPanel>
-                    <TextBlock Text="Agency contacts" Style="{StaticResource H2}" />
+                    <TextBlock x:Name="ContactsHeaderText" Style="{StaticResource H2}" />
                     <TextBlock Text="Used for the &quot;Prepared for&quot; line on reports and as the default &quot;Sent to&quot; on invoices. The first row is the default."
                                Style="{StaticResource Muted}" Margin="0,0,0,8" TextWrapping="Wrap" />
                     <DataGrid x:Name="ContactGrid" IsReadOnly="False" CanUserAddRows="True" AutoGenerateColumns="False"
